@@ -7,6 +7,7 @@ CREATE TABLE app_user(
    password VARCHAR(50),
    email VARCHAR(50),
    subscription_date DATE,
+   role ENUM('admin', 'user'),
    PRIMARY KEY(id_user)
 );
 
