@@ -27,8 +27,9 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
+                .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/subscribe").permitAll()
+                        .requestMatchers("/add_product").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

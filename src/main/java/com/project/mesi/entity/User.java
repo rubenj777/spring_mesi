@@ -12,16 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "app_user")
+@Table(name = "appuser")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_user;
+    private Long idUser;
 
-    private String last_name;
+    private String lastName;
 
-    private String first_name;
+    private String firstName;
 
     private String username;
 
@@ -29,16 +29,16 @@ public class User {
 
     private String email;
 
-    private Date subscription_date;
+    private Date subscriptionDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
-            name="user_role",
-            joinColumns={@JoinColumn(name="id_user", referencedColumnName="id_user")},
-            inverseJoinColumns={@JoinColumn(name="id_role", referencedColumnName="id_role")})
+            name="userrole",
+            joinColumns={@JoinColumn(name="idUser", referencedColumnName="idUser")},
+            inverseJoinColumns={@JoinColumn(name="idRole", referencedColumnName="idRole")})
     private List<Role> roles = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
-    private Product product;
+    @OneToMany(mappedBy = "user")
+    private List<Product> productList;
 
 }

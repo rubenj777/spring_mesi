@@ -1,6 +1,7 @@
 package com.project.mesi.service.impl;
 
 import com.project.mesi.dto.UserDto;
+import com.project.mesi.entity.Role;
 import com.project.mesi.entity.User;
 import com.project.mesi.repository.RoleRepository;
 import com.project.mesi.repository.UserRepository;
@@ -8,7 +9,9 @@ import com.project.mesi.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -29,13 +32,18 @@ public class UserServiceImpl implements UserService
     public void save(UserDto userDto)
     {
         User user = new User();
-        user.setFirst_name(userDto.getFirst_name());
-        user.setLast_name(userDto.getLast_name());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user.setUsername(userDto.getUsername());
-        user.setSubscription_date(userDto.getSubscription_date());
+        user.setSubscriptionDate(userDto.getSubscriptionDate());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(Collections.singletonList(roleRepository.findByName("user")));
+
+        Role role = roleRepository.findByName("user");
+        if(role != null){
+            user.setRoles(List.of(role));
+        }
+
         userRepository.save(user);
     }
 

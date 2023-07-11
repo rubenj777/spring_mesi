@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,9 +18,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "product")
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_product;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idProduct;
 
     private String name;
 
@@ -23,13 +29,12 @@ public class Product {
 
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @JoinTable(name = "user_product",
-        joinColumns =
-                { @JoinColumn(name = "id_product", referencedColumnName = "id_product") },
-        inverseJoinColumns =
-                { @JoinColumn(name = "id_user", referencedColumnName = "id_user") })
+    @ManyToOne
+    @JoinColumn(name = "idUser", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "idCategory")
+    private Category category;
 
 }
