@@ -3,6 +3,8 @@ package com.project.mesi.security;
 import com.project.mesi.entity.Role;
 import com.project.mesi.entity.User;
 import com.project.mesi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private final UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -41,4 +44,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .collect(Collectors.toList());
         return mapRoles;
     }
+
 }

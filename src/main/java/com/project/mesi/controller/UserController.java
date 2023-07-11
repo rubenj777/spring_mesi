@@ -2,6 +2,7 @@ package com.project.mesi.controller;
 
 import com.project.mesi.dto.UserDto;
 import com.project.mesi.entity.User;
+import com.project.mesi.repository.CategoryRepository;
 import com.project.mesi.repository.UserRepository;
 import com.project.mesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
 
-
 @Controller
 public class UserController
 {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -60,7 +64,7 @@ public class UserController
             return "sub_form";
         }
 
-        user.setSubscription_date(new Date());
+        user.setSubscriptionDate(new Date());
         userService.save(user);
         return "redirect:/";
     }

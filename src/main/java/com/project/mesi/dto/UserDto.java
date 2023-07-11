@@ -12,11 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDto {
 
-    private Long id;
+    private Long idUser;
 
-    private String first_name;
+    private String firstName;
 
-    private String last_name;
+    private String lastName;
 
     private String username;
 
@@ -24,7 +24,7 @@ public class UserDto {
 
     private String password;
 
-    private Date subscription_date;
+    private Date subscriptionDate;
 
     private List<Role> roles;
 

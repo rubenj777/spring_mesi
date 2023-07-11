@@ -1,21 +1,12 @@
 package com.project.mesi.service;
 
-import com.project.mesi.entity.Product;
-import com.project.mesi.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.project.mesi.dto.ProductDto;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
+public interface ProductService
+{
 
-@Service
-public class ProductService {
+    void save(ProductDto productDto, @AuthenticationPrincipal UserDetails userDetails);
 
-    @Autowired
-    ProductRepository productRepository;
-
-    public ProductService(){}
-
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
 }
