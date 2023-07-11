@@ -1,6 +1,5 @@
 package com.project.mesi.controller;
 
-import com.project.mesi.dto.CategoryDto;
 import com.project.mesi.dto.ProductDto;
 import com.project.mesi.entity.Category;
 import com.project.mesi.repository.CategoryRepository;
@@ -42,12 +41,9 @@ public class ProductController {
 
     @PostMapping(value = "/add_product")
     public String addProduct(@Validated @ModelAttribute("product") ProductDto productDto,
-                             @ModelAttribute CategoryDto categoryDto,
                              @AuthenticationPrincipal UserDetails user)
     {
-
         productService.save(productDto, user);
-
         return "redirect:/";
     }
 
