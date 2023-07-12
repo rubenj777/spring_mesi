@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "appuser")
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -33,7 +33,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
-            name="userrole",
+            name="user_roles",
             joinColumns={@JoinColumn(name="idUser", referencedColumnName="idUser")},
             inverseJoinColumns={@JoinColumn(name="idRole", referencedColumnName="idRole")})
     private List<Role> roles = new ArrayList<>();
