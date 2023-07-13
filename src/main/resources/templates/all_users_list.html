@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="~{fragments/common :: head}"></div>
+
+<body>
+
+<div th:insert="~{fragments/common :: nav}"></div>
+
+<div class="container mt-5">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Nom d'utilisateur</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody th:each="user:${users}">
+    <tr>
+      <th scope="row" th:text="${user.idUser}"></th>
+      <td th:text="${user.firstName}"></td>
+      <td th:text="${user.lastName}"></td>
+      <td th:text="${user.username}"></td>
+      <td>
+        <form th:action="@{/delete_user/{id}(id=${user.idUser})}">
+          <button th:text="Supprimer" class="btn btn-outline-danger"></button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</body>

@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.List;
 
 @Controller
@@ -39,11 +39,13 @@ public class ProductController {
         return "add_product_form";
     }
 
-    @PostMapping(value = "/add_product")
-    public String addProduct(@Validated @ModelAttribute("product") ProductDto productDto,
-                             @AuthenticationPrincipal UserDetails user)
-    {
-        productService.save(productDto, user);
+    @PostMapping(value = "/save_product")
+    public String saveProduct(@Validated @ModelAttribute("product") ProductDto productDto,
+                              @AuthenticationPrincipal UserDetails user,
+                              @RequestParam MultipartFile file) throws IOException {
+
+        productService.save(productDto, user, file);
+
         return "redirect:/";
     }
 

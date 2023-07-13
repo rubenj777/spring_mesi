@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:insert="~{fragments/common :: head}"></div>
+
+<body>
+
+<div th:insert="~{fragments/common :: nav}"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="container justify-content-center mt-5">
+      <form th:action="@{/add_category}" th:object="${category}" method="post">
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" placeholder="Nom de la catégorie" th:field="*{name}">
+          <p th:errors="*{name}" class="text-danger"
+             th:if="${#fields.hasErrors('name')}"></p>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter la catégorie</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
