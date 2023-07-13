@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurity {
+public class SpringSecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -28,20 +28,42 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/subscribe").permitAll()
-                        .requestMatchers("/add_product").authenticated()
+                        .requestMatchers(
+                                "/",
+                                "/subscribe",
+                                "/webjars/**",
+                                "/image/*",
+                                "/resources/**",
+                                "/static/**",
+                                "/css/**",
+                                "*.css"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/add_product",
+                                "/save_product"
+                        ).authenticated()
+
+                        .requestMatchers(
+                                "/all_users",
+                                "/delete_user/*"
+                        ).hasAuthority("admin")
+
                         .anyRequest().authenticated()
                 )
+
                 .formLogin((form) -> form
                         .loginPage("/")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
                         .loginProcessingUrl("/login")
                         .failureUrl("/?error")
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect(request.getContextPath());
+                        })
                         .permitAll()
                 )
                 .logout((logout) -> logout
                         .logoutSuccessUrl("/?logout")
-                        .permitAll()
                 );
 
         return http.build();
@@ -53,5 +75,6 @@ public class SpringSecurity {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
 
 }

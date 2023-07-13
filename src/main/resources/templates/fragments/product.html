@@ -1,0 +1,16 @@
+<div class="card" th:fragment="product">
+
+    <a href="#">
+    <img th:src="@{'/image/' + ${product.idProduct}}"
+         class="card-img-top" alt="" />
+    </a>
+
+    <div class="card-body">
+      <a href="#" th:text="${product.category.name}"></a>
+      <div class="d-flex justify-content-between mb-3">
+        <h5 class="mb-0" th:text="${product.name}"></h5>
+        <h5 class="text-dark mb-0" th:text="${product.price} + ' €'"></h5>
+      </div>
+    </div>
+
+</div>

@@ -1,11 +1,14 @@
 package com.project.mesi.controller;
 
 import com.project.mesi.dto.UserDto;
+import com.project.mesi.entity.Product;
 import com.project.mesi.entity.User;
 import com.project.mesi.repository.CategoryRepository;
 import com.project.mesi.repository.UserRepository;
 import com.project.mesi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController
@@ -67,6 +71,16 @@ public class UserController
         user.setSubscriptionDate(new Date());
         userService.save(user);
         return "redirect:/";
+    }
+
+    @GetMapping(value = "/profile")
+    public String getProfile(Model model, @AuthenticationPrincipal UserDetails userDetails)
+    {
+        User user = userService.findByUsername(userDetails.getUsername());
+        List<Product> productList = user.getProductList();
+        model.addAttribute("user", user);
+        model.addAttribute("productList", productList);
+        return "profile";
     }
 
 }

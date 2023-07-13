@@ -10,7 +10,7 @@
 <div class="container">
   <div class="row">
     <div class="container justify-content-center mt-5">
-      <form th:action="@{/add_product}" th:object="${product}" method="post">
+      <form th:action="@{/save_product}" th:object="${product}" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <input type="text" class="form-control" id="name" placeholder="Titre" th:field="*{name}">
         </div>
@@ -19,6 +19,9 @@
         </div>
         <div class="form-group">
           <input type="number" class="form-control" id="price" placeholder="Prix" th:field="*{price}">
+        </div>
+        <div class="form-group">
+          <input type="file" class="form-control" id="file" name="file" accept="image/png, image/jpeg">
         </div>
         <div class="form-group">
           <select name="category" id="category">

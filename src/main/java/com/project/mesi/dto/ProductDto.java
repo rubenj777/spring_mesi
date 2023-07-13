@@ -21,6 +21,10 @@ public class ProductDto {
 
     private String description;
 
+    private byte[] fileContent;
+
+    private String filePath;
+
     private User user;
 
     private Category category;
