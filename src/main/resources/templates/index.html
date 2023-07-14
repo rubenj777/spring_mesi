@@ -7,14 +7,4 @@
 
     <div th:insert="~{fragments/common :: nav}"></div>
 
-    <section>
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-md-12 col-lg-4 mb-4" th:each = "product : ${productList}"}>
-                    <div th:insert="~{fragments/product :: product}"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
 </body>
