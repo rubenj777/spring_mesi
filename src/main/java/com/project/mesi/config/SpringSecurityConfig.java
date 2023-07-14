@@ -31,11 +31,14 @@ public class SpringSecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/subscribe",
+                                "/products/**",
                                 "/webjars/**",
                                 "/image/*",
                                 "/resources/**",
                                 "/static/**",
                                 "/css/**",
+                                "/js/**",
+                                "*.js",
                                 "*.css"
                         ).permitAll()
 
