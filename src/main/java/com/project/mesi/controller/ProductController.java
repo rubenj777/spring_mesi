@@ -73,6 +73,7 @@ public class ProductController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
 
+        /*TODO refactor*/
         if (name.isPresent())
         {
             Page<Product> pagination = productService.findPaginated(currentPage, pageSize, name.get());

@@ -1,5 +1,5 @@
 body {
-    background-color: #eee;
+    background-color: #e9e9ec;
 }
 
 .card-img-top {
@@ -7,3 +7,4 @@ body {
     height: 15vw;
     object-fit: cover;
 }
+

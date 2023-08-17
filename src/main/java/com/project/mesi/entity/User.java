@@ -31,6 +31,9 @@ public class User {
 
     private Date subscriptionDate;
 
+    @Lob
+    private byte[] profilePicContent;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
             name="user_roles",
