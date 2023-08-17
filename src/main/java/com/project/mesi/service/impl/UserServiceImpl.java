@@ -8,7 +8,9 @@ import com.project.mesi.repository.UserRepository;
 import com.project.mesi.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -27,8 +29,10 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void save(UserDto userDto)
-    {
+    public void save(UserDto userDto,
+                     MultipartFile profilePicContent
+                    ) throws IOException {
+
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -37,12 +41,25 @@ public class UserServiceImpl implements UserService
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
+        user.setProfilePicContent(profilePicContent.getBytes());
+
         Role role = roleRepository.findByName("user");
         if(role != null){
             user.setRoles(List.of(role));
         }
 
         userRepository.save(user);
+    }
+
+    @Override
+    public void update(UserDto userDto,
+                       MultipartFile profilePicContent
+                      ) throws IOException {
+        User userToUpdate = userRepository.findOneByIdUser(userDto.getIdUser());
+        userToUpdate.setUsername(userDto.getUsername());
+        userToUpdate.setEmail(userToUpdate.getEmail());
+        userToUpdate.setProfilePicContent(profilePicContent.getBytes());
+        userRepository.save(userToUpdate);
     }
 
     @Override

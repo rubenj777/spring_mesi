@@ -26,6 +26,8 @@ public class UserDto {
 
     private Date subscriptionDate;
 
+    private byte[] profilePicContent;
+
     private List<Role> roles;
 
 }
