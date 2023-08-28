@@ -61,12 +61,12 @@ public class UserController
 
         if (usernameExist != null)
         {
-            result.rejectValue("username", null, "Un utilisateur avec ce pseudo existe déjà.");
+            result.rejectValue("username", "Un utilisateur avec ce pseudo existe déjà.");
         }
 
         if (emailExist != null || !Objects.equals(usernameExist.getEmail(), userDto.getEmail()))
         {
-            result.rejectValue("email", null, "Un utilisateur avec cette adresse email existe déjà.");
+            result.rejectValue("email", "Un utilisateur avec cette adresse email existe déjà.");
         }
     }
 
@@ -77,13 +77,14 @@ public class UserController
         return "sub_form";
     }
 
+    /* TODO refactor avec fonction UserExists pour générer les messages d'erreurs */
     @PostMapping(value = "/subscribe")
     public String subscribeSubmit(@Validated @ModelAttribute("user") UserDto userDto,
                                   @RequestParam MultipartFile file,
                                   BindingResult result,
                                   Model model) throws IOException {
 
-        boolean isEditing = false;
+       /* boolean isEditing = false;
 
         UserExists(userDto, result, isEditing);
         if (result.hasErrors())
@@ -94,7 +95,30 @@ public class UserController
 
         userDto.setSubscriptionDate(new Date());
         userService.save(userDto, file);
+        return "redirect:/";*/
+        User usernameExist = userService.findByUsername(userDto.getUsername());
+        User emailExist = userService.findByEmail(userDto.getEmail());
+
+        if (usernameExist != null)
+        {
+            result.rejectValue("username", "Un utilisateur avec ce pseudo existe déjà.");
+        }
+
+        if (emailExist != null)
+        {
+            result.rejectValue("email", "Un utilisateur avec cette adresse email existe déjà.");
+        }
+
+        if (result.hasErrors())
+        {
+            model.addAttribute("user", userDto);
+            return "sub_form";
+        }
+
+        userDto.setSubscriptionDate(new Date());
+        userService.save(userDto, file);
         return "redirect:/";
+
     }
 
     @GetMapping(value = "/profile/{username}")
