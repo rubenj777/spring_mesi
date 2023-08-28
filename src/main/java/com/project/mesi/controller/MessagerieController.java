@@ -76,7 +76,7 @@ public class MessagerieController {
     @GetMapping(value = "/message_response")
     public String messageResponse(Model model, @RequestParam("senderId") Long senderId,
             @AuthenticationPrincipal UserDetails userDetails) {
-
+        return "test";
     }
 
 }
