@@ -24,8 +24,16 @@
     </nav>
 
     <div class="row">
-      <div class="col-md-12 col-lg-4 mb-4" th:each = "product : ${productList}"}>
+      <div class="col-md-12 col-lg-4 mb-4" th:each = "product : ${productList}">
         <div th:insert="~{fragments/product :: product}"></div>
+        <div>
+          <a th:if="${!productList.isEmpty()}"
+             th:text="'Envoyer un message'"
+             class="btn btn-primary"
+             th:href="'/messagerie?senderId='+${product.getIdProduct()}">
+            </a>
+      </div>
+      
       </div>
     </div>
   </div>

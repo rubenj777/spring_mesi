@@ -33,6 +33,8 @@
             <a class="dropdown-item btn" href="/all_users" sec:authorize="hasAuthority('admin')" th:text="'Voir tous les utilisateurs'"></a>
             <a class="dropdown-item btn" href="/add_category" sec:authorize="hasAuthority('admin')" th:text="'Ajouter une catégorie'"></a>
             <a class="dropdown-item btn" href="/add_product" sec:authorize="isAuthenticated()" th:text="'Ajouter un article'"></a>
+            <a class="dropdown-item btn" href="/user_product" sec:authorize="isAuthenticated()" th:text="'Voir mes articles'"></a>
+            <a class="dropdown-item btn" href="/messagerie_access" sec:authorize="isAuthenticated()" th:text="'Ma messagerie'"></a>
 
             <div class="dropdown-divider"></div>
 
