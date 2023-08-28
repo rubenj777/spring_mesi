@@ -1,6 +1,7 @@
 package com.project.mesi.service.impl;
 
 import com.project.mesi.dto.ProductDto;
+import com.project.mesi.entity.Category;
 import com.project.mesi.entity.Product;
 import com.project.mesi.entity.User;
 import com.project.mesi.repository.ProductRepository;
@@ -53,12 +54,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAllByCategory_Name(name, pageable);
     }
 
-
     @Override
     public void save(ProductDto productDto,
-                     @AuthenticationPrincipal UserDetails userDetails,
-                     MultipartFile file
-                     ) throws IOException {
+            @AuthenticationPrincipal UserDetails userDetails,
+            MultipartFile file) throws IOException {
 
         Product product = new Product();
 
@@ -67,8 +66,10 @@ public class ProductServiceImpl implements ProductService {
 
         product.setFileContent(file.getBytes());
 
-        /*Path filePath = Paths.get("/" + new Date().getTime() + file.getName());
-        Files.write(filePath, file.getBytes());*/
+        /*
+         * Path filePath = Paths.get("/" + new Date().getTime() + file.getName());
+         * Files.write(filePath, file.getBytes());
+         */
 
         product.setFilePath("null");
         product.setFileName(file.getOriginalFilename());
@@ -81,6 +82,13 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    @Override
+    public void deleteProductByIProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 
-
+    @Override
+    public void updateProduct(String name, int price, String description, Category category, Long productId) {
+        productRepository.updateProduct(name, price, description, category, productId);
+    }
 }

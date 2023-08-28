@@ -45,8 +45,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/add_product")
-    public String addProductForm(Model model)
-    {
+    public String addProductForm(Model model) {
         List<Category> categoryList = categoryRepository.findAll();
         ProductDto productDto = new ProductDto();
         model.addAttribute("product", productDto);
@@ -56,8 +55,8 @@ public class ProductController {
 
     @PostMapping(value = "/save_product")
     public String saveProduct(@Validated @ModelAttribute("product") ProductDto productDto,
-                              @AuthenticationPrincipal UserDetails user,
-                              @RequestParam MultipartFile file) throws IOException {
+            @AuthenticationPrincipal UserDetails user,
+            @RequestParam MultipartFile file) throws IOException {
 
         productService.save(productDto, user, file);
 
@@ -66,21 +65,18 @@ public class ProductController {
 
     @GetMapping
     public String getProducts(Model model,
-                       @RequestParam("page") Optional<Integer> page,
-                       @RequestParam("size") Optional<Integer> size,
-                       @RequestParam("name") Optional<String> name) {
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("name") Optional<String> name) {
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
 
-        if (name.isPresent())
-        {
+        if (name.isPresent()) {
             Page<Product> pagination = productService.findPaginated(currentPage, pageSize, name.get());
             List<Product> productList = pagination.getContent();
             model.addAttribute("productList", productList);
-        }
-        else
-        {
+        } else {
             Page<Product> pagination = productService.findPaginated(currentPage, pageSize);
             List<Product> productList = pagination.getContent();
             model.addAttribute("productList", productList);
@@ -97,12 +93,11 @@ public class ProductController {
 
     @GetMapping(value = "/image/{id}")
     public void getImage(@PathVariable Long id,
-                         HttpServletResponse response) throws IOException {
+            HttpServletResponse response) throws IOException {
         Product product = productService.findOneById(id);
         response.setContentType("image/jpg");
         InputStream is = new ByteArrayInputStream(product.getFileContent());
         IOUtils.copy(is, response.getOutputStream());
     }
-
 
 }

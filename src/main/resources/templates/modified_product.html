@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/common :: head}"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Produit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div th:insert="~{fragments/common :: nav}"></div>
+    <div class="container">
+        <h1>Modifier le Produit</h1>
+        <form th:action="@{/update_product}" method="post">
+            <input type="hidden" name="productId" th:value="${product.getIdProduct()}">
+            <div class="form-group">
+                <label for="name">Nom:</label>
+                <input type="text" id="name" name="name" th:value="${product.getName()}">
+            </div>
+            <div class="form-group">
+                <label for="price">Prix:</label>
+                <input type="text" id="price" name="price" th:value="${product.getPrice()}">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" th:text="${product.getDescription()}"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Catégorie:</label>
+                <select id="category" name="category">
+                    <option value="">Sélectionnez une catégorie</option>
+                    <option th:each="category : ${categoryList}" th:value="${category.getIdCategory()}" th:text="${category.getName()}"><input type="hidden" name="categoryName" th:value="${category.getName()}"></option>
+                    
+
+                </select>
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Valider les Modifications</button>
+        </form>
+    </div>
+</body>
+</html>

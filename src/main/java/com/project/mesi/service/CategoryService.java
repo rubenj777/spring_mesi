@@ -11,4 +11,6 @@ public interface CategoryService {
 
     Category findByName(String name);
 
+    Category findByIdCategory(Long id);
+
 }

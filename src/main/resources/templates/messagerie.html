@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/common :: head}"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="scripts/messagerieStyle.css">
+    <title>Interface de Messagerie</title>
+</head>
+<body>
+<div th:insert="~{fragments/common :: nav}"></div>
+<div class="container">
+    <div class="sidebar">
+        <button id="btnNew">Nouveau Message</button>
+        <button id="btnInbox">Boite de Réception</button>
+        <button id="btnSent">Messages Envoyés</button>
+    </div>
+    
+    <div class="content" id="contentNew">
+        <form th:action="@{/send_message}" method="post">
+            <input type="hidden" name="customer" th:value="${userConnected}">
+            A : <input type="number" name="seller" th:value="${sellerId}">
+            Object : <input type="text" name="object" th:value="${messageObject}">
+            <textarea name="content" placeholder="Message :"></textarea>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+   
+    <div class="content" id="contentInbox">
+        <h2>Messages Reçus</h2>
+        <div class="message-box">
+            <div th:each="message : ${incommingMessageList}" class="message-container">
+                <p>De : <span th:text="${message.getIdUser}"></span></p>
+                <p>Object : <span th:text="${message.getObject()}"></span></p>
+                <p>Content : <span th:text="${message.getContent()}"></span></p>
+                <div>
+                    <a th:if="${!incommingMessageList.isEmpty()}"
+                       th:text="'Repondre au message'"
+                       class="btn btn-primary"
+                       th:href="'/message_response?senderId='+${message.getIdUser()}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content" id="contentSent">
+        <h2>Messages Envoyés</h2>
+        <div class="message-box">
+            <div th:each="message : ${sendingMessageList}" class="message-container">
+                <p>À : <span th:text="${message.getIdUser1()}"></span></p>
+                <p>Object : <span th:text="${message.getObject()}"></span></p>
+                <p>Content : <span th:text="${message.getContent()}"></span></p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script src="/scripts/script.js"></script>
+</body>
+</html>
