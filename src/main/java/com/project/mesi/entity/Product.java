@@ -24,11 +24,6 @@ public class Product {
 
     private String description;
 
-    @Lob
-    private byte[] fileContent;
-
-    private String filePath;
-
     private String fileName;
 
     @ManyToOne

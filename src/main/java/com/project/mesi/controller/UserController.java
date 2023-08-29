@@ -134,15 +134,6 @@ public class UserController
         return "profile";
     }
 
-    @GetMapping(value = "/image/{id}")
-    public void getProfilePic(@PathVariable Long id,
-                         HttpServletResponse response) throws IOException {
-        User user = userService.findOneById(id);
-        response.setContentType("image/jpg");
-        InputStream is = new ByteArrayInputStream(user.getProfilePicContent());
-        IOUtils.copy(is, response.getOutputStream());
-    }
-
     @GetMapping(value = "/edit/{id}")
     public String editProfile(Model model, @PathVariable Long id) {
         User user = this.userService.findOneById(id);

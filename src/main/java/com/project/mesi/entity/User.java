@@ -31,8 +31,7 @@ public class User {
 
     private Date subscriptionDate;
 
-    @Lob
-    private byte[] profilePicContent;
+    private String fileName;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(

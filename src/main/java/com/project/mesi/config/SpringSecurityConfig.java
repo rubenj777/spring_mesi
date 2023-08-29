@@ -33,13 +33,17 @@ public class SpringSecurityConfig {
                                 "/subscribe",
                                 "/products/**",
                                 "/webjars/**",
-                                "/image/*",
+                                "/images/**",
+                                "/users/**",
                                 "/resources/**",
                                 "/static/**",
                                 "/css/**",
                                 "/js/**",
                                 "*.js",
-                                "*.css"
+                                "*.css",
+                                "*.jpg",
+                                "*.jpeg",
+                                "*.png"
                         ).permitAll()
 
                         .requestMatchers(

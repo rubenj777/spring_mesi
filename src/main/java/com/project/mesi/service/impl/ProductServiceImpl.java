@@ -16,7 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -64,15 +70,18 @@ public class ProductServiceImpl implements ProductService {
         User userConnected = userRepository.findByUsername(userDetails.getUsername());
         product.setUser(userConnected);
 
-        product.setFileContent(file.getBytes());
+        String filename = new Date().getTime() + "_" + file.getOriginalFilename();
+        String workingDirectory = System.getProperty("user.dir");
 
-        /*
-         * Path filePath = Paths.get("/" + new Date().getTime() + file.getName());
-         * Files.write(filePath, file.getBytes());
-         */
+        //****************//
+        BufferedImage bi = ImageIO.read(file.getInputStream());
+        File output = new File(workingDirectory + "/src/main/resources/static/images", filename);
+        ImageIO.write(bi, "png", output);
+        //****************//
 
-        product.setFilePath("null");
-        product.setFileName(file.getOriginalFilename());
+        System.out.println("Final filepath : " + output.getCanonicalPath());
+
+        product.setFileName(filename);
 
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());

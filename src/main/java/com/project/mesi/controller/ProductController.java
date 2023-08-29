@@ -96,14 +96,4 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping(value = "/image/{id}")
-    public void getImage(@PathVariable Long id,
-                         HttpServletResponse response) throws IOException {
-        Product product = productService.findOneById(id);
-        response.setContentType("image/jpg");
-        InputStream is = new ByteArrayInputStream(product.getFileContent());
-        IOUtils.copy(is, response.getOutputStream());
-    }
-
-
 }

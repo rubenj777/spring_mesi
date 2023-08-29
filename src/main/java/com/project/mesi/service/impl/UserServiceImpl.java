@@ -10,7 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService
 
     @Override
     public void save(UserDto userDto,
-                     MultipartFile profilePicContent
+                     MultipartFile file
                     ) throws IOException {
 
         User user = new User();
@@ -41,7 +47,20 @@ public class UserServiceImpl implements UserService
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        user.setProfilePicContent(profilePicContent.getBytes());
+        String filename = new Date().getTime() + "_" + file.getOriginalFilename();
+        String workingDirectory = System.getProperty("user.dir");
+
+        //****************//
+        BufferedImage bi = ImageIO.read(file.getInputStream());
+        File output = new File(workingDirectory + "/src/main/resources/static/images", filename);
+        ImageIO.write(bi, "png", output);
+
+        //****************//
+
+        System.out.println("Final filepath : " + output.getCanonicalPath());
+
+        user.setFileName(filename);
+        /*user.setProfilePicContent(profilePicContent.getBytes());*/
 
         Role role = roleRepository.findByName("user");
         if(role != null){
@@ -58,7 +77,7 @@ public class UserServiceImpl implements UserService
         User userToUpdate = userRepository.findOneByIdUser(userDto.getIdUser());
         userToUpdate.setUsername(userDto.getUsername());
         userToUpdate.setEmail(userToUpdate.getEmail());
-        userToUpdate.setProfilePicContent(profilePicContent.getBytes());
+        /*userToUpdate.setProfilePicContent(profilePicContent.getBytes());*/
         userRepository.save(userToUpdate);
     }
 

@@ -1,7 +1,7 @@
 <div class="card" th:fragment="product">
 
     <a href="#">
-    <img th:src="@{'products/image/' + ${product.idProduct}}"
+    <img th:src="@{${'/images/'+product.fileName}}"
          class="card-img-top" alt="" />
     </a>
 
